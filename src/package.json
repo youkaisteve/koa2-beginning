@@ -1,0 +1,22 @@
+{
+  "name": "koa2-beginning",
+  "version": "0.0.1",
+  "description": "koa2 learning",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha",
+    "start": "node index.js",
+    "dev": "./node_modules/.bin/nodemon -L index.js"
+  },
+  "author": "youkaisteve",
+  "license": "ISC",
+  "dependencies": {
+    "koa": "^2.5.2",
+    "koa-body": "^4.0.4"
+  },
+  "devDependencies": {
+    "mocha": "^5.2.0",
+    "nodemon": "^1.18.3",
+    "supertest": "^3.1.0"
+  }
+}
