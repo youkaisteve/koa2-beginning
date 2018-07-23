@@ -99,6 +99,7 @@ docker exec -it -w /koa2 koa2-beginning npm install supertest mocha --save-dev
 |   |____test
 |   |    |____body_parsing.js
 ```
+添加测试代码
 ```js
 const app = require('../index');
 const server = app.listen();
@@ -173,7 +174,7 @@ if (!module.parent) app.listen(3000);
 ```
 
 修改package.json,添加test
-```json
+```text
 {
   ...
   "scripts": {
