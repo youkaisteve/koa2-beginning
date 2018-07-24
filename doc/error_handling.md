@@ -57,7 +57,7 @@ throw err;
 因此,我们可以在全局的errorhandler里面,通过err.expose标记,来选择是否记录日志
 ```js
 /**
- *  这里如果err.expose不为true,属于用户级错误,在中间件处理
+ *  这里如果err.expose为true,属于用户级错误,在中间件处理
  */
 app.on('error', async (err, ctx) => {
     if (!err.expose && !module.parent) {
