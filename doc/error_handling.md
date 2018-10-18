@@ -36,6 +36,22 @@ router.get('/error/partial', async (ctx, next) => {
 })
 ```
 
+## app.onerror
+如果没有指定错误侦听器,便使用app.onerror,koa默认的错误侦听器,接收所有中间件链返回的错误.
+
+使用app.on('error')指定侦听器
+```js
+app.on('error', async (err, ctx) => {
+    console.log(err)
+})
+```
+
+## ctx.app.emit
+如果一个错误被捕获并且不再抛出，它将不会被传递给错误侦听器,如果需要,可以通过ctx.app.emit可将错误推送给错误侦听器
+```js
+ctx.app.emit('error', err, ctx)
+```
+
 ## ctx.throw([status], [msg], [properties])
 Helper 方法抛出一个 .status 属性默认为 500 的错误，这将允许 Koa 做出适当地响应。
 
@@ -52,9 +68,7 @@ err.status = 400;
 err.expose = true;
 throw err;
 ```
-请注意，这些传了status的是用户级错误，并用err.expose标记，这意味着消息适用于客户端响应，这通常不是错误消息的内容，因为您不想泄漏故障详细信息。
-
-因此,我们可以在全局的errorhandler里面,通过err.expose标记,来选择是否记录日志
+需要注意，这些传了status的是用户级错误，并用err.expose标记.因此,我们可以在全局的errorhandler里面,通过err.expose标记,来选择是否记录日志
 ```js
 /**
  *  这里如果err.expose为true,属于用户级错误,在中间件处理
@@ -87,20 +101,4 @@ app.use(async (ctx, next) => {
         }
     }
 })
-```
-
-## app.onerror
-如果没有指定错误侦听器,便使用app.onerror,koa默认的错误侦听器,接收所有中间件链返回的错误.
-
-使用app.on('error')指定侦听器
-```js
-app.on('error', async (err, ctx) => {
-    console.log(err)
-})
-```
-
-## ctx.app.emit
-如果一个错误被捕获并且不再抛出，它将不会被传递给错误侦听器,如果需要,可以通过ctx.app.emit可将错误推送给错误侦听器
-```js
-ctx.app.emit('error', err, ctx)
 ```

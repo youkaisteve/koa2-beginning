@@ -13,7 +13,9 @@
   "dependencies": {
     "koa": "^2.5.2",
     "koa-body": "^4.0.4",
-    "koa-router": "^7.4.0"
+    "koa-passport": "^4.1.1",
+    "koa-router": "^7.4.0",
+    "passport-local": "^1.0.0"
   },
   "devDependencies": {
     "mocha": "^5.2.0",

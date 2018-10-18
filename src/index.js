@@ -1,9 +1,8 @@
 const Koa = require('koa');
 const koaBody = require('koa-body')
-const Router = require('koa-router');
+const passport = require('koa-passport')
 
 const app = module.exports = new Koa();
-const router = new Router();
 
 app.on('error', async (err, ctx) => {
     if (!err.expose && !module.parent) {
@@ -42,38 +41,11 @@ app.use(koaBody({
     jsonLimit: '1kb'
 }))
 
-router.post('/uppercase', async (ctx, next) => {
-    const body = ctx.request.body;
-    if (!body.name) ctx.throw(400, '.name required');
-    ctx.body = { name: body.name.toUpperCase() };
-})
+require('./auth/passport_auth')
+app.use(passport.initialize())
+app.use(passport.session())
+app.use(passport.authenticate('jwt', { session: false }))
 
-router.get('/error', async (ctx, next) => {
-    throw new Error('error');
-})
-
-/**
- * 处理局部路由的异常
- */
-router.get('/error/partial', async (ctx, next) => {
-    try {
-        throw new Error('error/partial');
-    } catch (err) {
-        ctx.status = 200
-        ctx.body = {
-            success: false
-        }
-    }
-})
-
-/**
- * 用户级别的异常
- */
-router.get('/error/userlevel', async (ctx, next) => {
-    ctx.throw(401, "username or password invalid")
-})
-
-app.use(router.routes());
-app.use(router.allowedMethods());
+require('./routes')(app)
 
 if (!module.parent) app.listen(3000);

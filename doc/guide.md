@@ -57,7 +57,7 @@ curl -L 127.0.0.1:3001
 ## 自动刷新
 使用nodemon帮助我们进行自动刷新
 ```bash
-docker exec -it w /koa2 koa2-beginning npm install koa --save-dev
+docker exec -it -w /koa2 koa2-beginning npm install nodemon --save-dev
 ```
 修改npm启动命令,在scripts下增加dev
 ```json
